@@ -1,0 +1,5 @@
+# macOS (Apple Silicon) 开发环境
+# PyPI 默认源即提供 arm64 MPS wheel
+# 不追 torch 2.8/2.9：torchaudio 进入弃用迁移期，CosyVoice/FunASR 依赖其经典 API
+torch==2.7.1
+torchaudio==2.7.1

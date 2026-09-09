@@ -1,0 +1,61 @@
+# 双平台共同业务依赖。
+# ！！安装顺序：先装 torch（torch-mac.txt 或 torch-win-cu128.txt），再装本文件。！！
+# funasr / openai-whisper 会声明 torch>=x 依赖，先装好 torch 即被满足，
+# 否则 pip 可能从默认源拉一个错误 CUDA 版本的 torch 覆盖 cu128 版本。
+
+# --- Web 框架 ---
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.30
+python-multipart>=0.0.9
+pydantic>=2.7,<3.0
+pydantic-settings>=2.3
+
+# --- 音频编解码（无需系统 ffmpeg）---
+av>=13.0                 # PyAV：wheel 自带 FFmpeg，解码 m4a/opus/webm，编码 mp3
+soundfile>=0.13          # libsndfile：wav/flac/ogg(vorbis)/mp3 读写
+soxr>=0.5                # 高质量重采样（VHQ）
+numpy>=1.26,<2.1         # 与 numba/whisper 兼容的保守区间
+
+# --- STT：SenseVoice + FSMN-VAD（纯 PyTorch）---
+funasr>=1.1.14
+
+# --- TTS：CosyVoice2 运行时依赖（vendored 于 third_party/CosyVoice，
+#     对齐其 requirements@074ca6d + 双平台实测 import 链，剔除：torch 钉版(改 cu128)/
+#     deepspeed/tensorrt/tensorboard/grpcio 等训练与服务工具）---
+hyperpyyaml>=1.2.2
+omegaconf>=2.3
+hydra-core>=1.3.2
+openai-whisper>=20231117  # CosyVoice frontend 的 mel 特征提取（纯 torch，不用于推理）
+numba>=0.60
+conformer>=0.3.2
+diffusers>=0.29           # flow 模块 CFM 调度器
+lightning>=2.2            # Matcha 模块 import 需要；仅推理不调用训练功能
+transformers>=4.51,<5.0   # Qwen2 tokenizer+LLM；**必须<5**：新版 from_pretrained 默认按
+                          # config 的 bf16 加载权重，与仓库 fp32 假设冲突（实测合成乱码）
+x-transformers>=2.11      # flow 注意力实现
+einops>=0.8
+inflect>=7.0              # 英文数字读法（spell_out_number）
+librosa>=0.10.2           # 仓库音频工具引用
+pyworld>=0.3.4            # HiFT 声码器 F0 提取
+pyloudnorm>=0.1.11
+networkx>=3.1
+rich>=13.7
+matplotlib>=3.7           # matcha 模块顶层 import（实测必需）
+gdown>=5.1                # flow_matching 顶层 import（实测必需）
+rootutils                 # matcha config 工具（实测必需）
+wget                      # cosyvoice.utils.file_utils 顶层 import（实测必需）
+pyarrow                   # dataset.processor 实例化链（实测必需）
+phonemizer>=3.3           # matcha text utils
+unidecode>=1.3            # phonemizer 依赖
+setuptools<81             # vendored 代码顶层用 pkg_resources，setuptools>=81 已移除
+onnxruntime>=1.17,<2.0    # win/mac 官方即 CPU 版（speech_tokenizer/campplus）
+# TN：新仓库用 wetext（kaldifst 预编译 wheel，**不再需要 pynini/conda**，Windows 直接 pip）。
+# 注意：FST 资源首次使用时从 modelscope 运行时下载到 ~/.cache —— 离线部署需预热（见部署文档）。
+wetext>=0.0.4
+
+# --- 模型下载 ---
+modelscope>=1.16
+huggingface_hub>=0.24
+
+# --- 运行时杂项 ---
+psutil

@@ -1,0 +1,21 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# 环境变量与模型权重
+.env
+models/
+
+# 本地试听输出
+samples/
+
+# IDE
+.idea/
+.vscode/
+
+# 系统
+.DS_Store

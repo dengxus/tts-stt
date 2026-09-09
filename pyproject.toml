@@ -1,0 +1,29 @@
+[project]
+name = "tts-stt"
+version = "0.1.0"
+description = "开源文本转语音 / 语音转文本基础服务（FastAPI + CosyVoice2 + SenseVoice）"
+requires-python = ">=3.10,<3.13"
+
+# 依赖不放这里：torch 必须分平台安装，统一用 requirements/*.txt 管理，见 README。
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+    "unit: 纯逻辑单元测试，无模型无 IO",
+    "api: 接口测试（mock 引擎），CI 可跑",
+    "model: 需要真实模型权重（MODEL_DIR 缺失自动 skip）",
+    "gpu: 仅在有 CUDA GPU 的机器上跑",
+    "slow: 慢测试",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+ignore = ["B008"]  # FastAPI 惯用 Depends(...) 作为参数默认值

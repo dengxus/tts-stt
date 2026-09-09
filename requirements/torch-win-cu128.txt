@@ -1,0 +1,6 @@
+# Windows 生产环境：RTX 5070（Blackwell sm_120）
+# PyTorch 2.7.1 是首个带官方 cu128 稳定 wheel（含 sm_120 内核）的版本。
+# 安装后必须用 scripts/check_env.py 验证 arch_list 含 sm_120。
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch==2.7.1+cu128
+torchaudio==2.7.1+cu128
