@@ -174,6 +174,11 @@ class CosyVoice2Engine(TTSEngine):
     def synthesize(self, text: str, opts: TTSOptions) -> PcmAudio:
         assert self.model is not None
         text = self._prenormalize(text)
+        if opts.seed is not None:
+            # LLM 采样有随机性：固定种子使同文本输出可复现，便于客户端可控重试
+            from cosyvoice.utils.common import set_all_random_seed
+
+            set_all_random_seed(opts.seed)
 
         if opts.zero_shot is not None:
             gen_fn, extra = self._mode_zero_shot(opts)
@@ -205,7 +210,7 @@ class CosyVoice2Engine(TTSEngine):
         if spk in self._spks:  # 权重自带 sft 音色（CosyVoice-300M-SFT 类模型）
             return self.model.inference_sft, lambda td: {"spk_id": spk}
         raise InvalidRequestError(
-            f"音色 {spk!r} 不存在，可用: {sorted(self._spks | set(self._registered))}"
+            f"音色 {spk!r} 不存在，可用: {sorted(set(self._spks) | set(self._registered))}"
             "（见 GET /api/v1/voices）")
 
     def _mode_instruct(self, opts: TTSOptions):

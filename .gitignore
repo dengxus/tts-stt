@@ -19,3 +19,4 @@ samples/
 
 # 系统
 .DS_Store
+*.wav

@@ -32,7 +32,7 @@ STT_SPECS: list[ModelSpec] = [
         key="vad",
         dir_name="speech_fsmn_vad_zh-cn-16k-common-pytorch",
         modelscope_id="iic/speech_fsmn_vad_zh-cn-16k-common-pytorch",
-        hf_id="iic/speech_fsmn_vad_zh-cn-16k-common-pytorch",
+        hf_id="funasr/fsmn-vad",  # HF 上无 iic/ 同名仓库（401），官方镜像在 funasr/ 组织下
         required_files=["model.pt"],
         kind="stt",
     ),

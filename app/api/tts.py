@@ -56,6 +56,7 @@ async def tts(
     opts = TTSOptions(
         voice=req.voice or settings.default_voice or None,
         speed=req.speed,
+        seed=req.seed,
         instruct=req.instruct,
         zero_shot=zero_shot,
     )

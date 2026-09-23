@@ -93,6 +93,7 @@ nssm start tts-stt
 |---|---|
 | `no kernel image is available` | torch 非 cu128，重装 `torch-win-cu128.txt` |
 | TTS 合成中文数字读法不对 | wetext FST 没下载成功（离线机器），见 §2；或检查启动日志 `use wetext frontend` |
+| TTS 音频时长异常膨胀、内容为乱码 | transformers 装到 4.52+，破坏 CosyVoice2 LLM 的 speech token 生成（flow/hift 正常）。锁定 `requirements/base.txt` 的 `transformers>=4.51,<4.52` 重装 |
 | 日志出现 `no frontend is avaliable` | wetext 未装/加载失败 → 已自动降级内置 regex TN |
 | 首次 TTS 特别慢 | 冷启动 warmup 前的首个请求；确认日志有 warmup 完成记录 |
 | 503 model_loading 持续 | 模型未下载完整：重跑 download_models.py（有校验与重试） |

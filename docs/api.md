@@ -35,6 +35,7 @@ Base URL：`http://<host>:8000`　前缀：`/api/v1`　交互式文档：`GET /d
   "format": "wav",                         // wav(默认) | mp3 | ogg | flac
   "sample_rate": 24000,                    // 可选 8000|16000|22050|24000|44100|48000；默认模型原生 24000
   "speed": 1.0,                            // 0.5 ~ 2.0
+  "seed": 42,                              // 可选，随机种子；固定后同文本可复现（采样有随机性）
   "instruct": "用开心的语气说",             // 可选，触发语气指令模式（instruct2）
   "zero_shot": {                           // 可选，声音克隆；需服务端 ALLOW_ZERO_SHOT=true
     "prompt_text": "参考音频的转写文本",

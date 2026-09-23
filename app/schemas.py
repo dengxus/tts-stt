@@ -24,6 +24,10 @@ class TTSRequest(BaseModel):
     format: AudioFormat = "wav"
     sample_rate: int | None = None
     speed: float = Field(default=1.0, ge=0.5, le=2.0)
+    seed: int | None = Field(
+        default=None,
+        description="随机种子：固定后同一文本输出可复现；不传则每次采样随机",
+    )
     instruct: str | None = None
     zero_shot: ZeroShotRefBody | None = None
     response_format: Literal["audio", "json"] = "audio"

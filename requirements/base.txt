@@ -30,8 +30,9 @@ numba>=0.60
 conformer>=0.3.2
 diffusers>=0.29           # flow 模块 CFM 调度器
 lightning>=2.2            # Matcha 模块 import 需要；仅推理不调用训练功能
-transformers>=4.51,<5.0   # Qwen2 tokenizer+LLM；**必须<5**：新版 from_pretrained 默认按
-                          # config 的 bf16 加载权重，与仓库 fp32 假设冲突（实测合成乱码）
+transformers>=4.51,<4.52   # Qwen2 tokenizer+LLM；必须锁 4.51.x（对齐 vendored requirements）。
+                          # 实测 4.52+ 会破坏 CosyVoice2 LLM 的 speech token 生成——音频时长
+                          # 膨胀数倍、内容为外星语乱码（flow/hift 解码正常，仅 LLM 出错）
 x-transformers>=2.11      # flow 注意力实现
 einops>=0.8
 inflect>=7.0              # 英文数字读法（spell_out_number）

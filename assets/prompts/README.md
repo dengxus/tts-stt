@@ -8,6 +8,7 @@ assets/prompts/<音色id>.txt      # 该音频的逐字转写文本（含标点�
 ```
 
 - 音色 id = 文件名（不含扩展名），请求里 `"voice": "<音色id>"`
-- 参考音频仅首次启动时提取特征并缓存到 `models/CosyVoice2-0.5B/spk2info.pt`；
-  更新 wav 后删除 spk2info.pt（或改文件名）以重注册
+- 参考音频仅首次启动时提取特征并缓存到 `models/CosyVoice2-0.5B/spk2info.pt`
+  （**txt 转写也一并缓存**，推理时不再读文件）；更新 wav **或** txt 后删除
+  spk2info.pt（或改文件名）重启以重注册
 - **授权要求**：参考音频必须是本人录音或已获授权/CC0 素材——克隆他人声音需明确同意

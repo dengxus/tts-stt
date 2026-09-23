@@ -72,6 +72,7 @@ CosyVoice 中文文本正则化（pynini）在 Windows 的安装策略 A/B/C，�
 
 请求/响应字段、错误码（429 队列满 / 503 加载中 / 504 超时 / 413 / 415）与 curl 示例全集
 见 [docs/api.md](docs/api.md)；交互式文档启动后访问 `/docs`。
+**业务方对接**（多语言示例、错误重试策略、并发纪律）见 [docs/integration.md](docs/integration.md)。
 
 ## 并发模型（8GB 显存下的关键纪律）
 
